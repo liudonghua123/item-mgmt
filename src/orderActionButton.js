@@ -6,8 +6,9 @@ import loopbackRestClient from 'aor-loopback';
 import { UPDATE } from 'admin-on-rest';
 import { showNotification as showNotificationAction } from 'admin-on-rest';
 import { push as pushAction } from 'react-router-redux';
+import {REACT_APP_API_HOST} from './Configration';
 
-const restClient = loopbackRestClient('/api');
+const restClient = loopbackRestClient(`${REACT_APP_API_HOST}/api`);
 
 class ApproveComponent extends Component {
     handleClick = () => {

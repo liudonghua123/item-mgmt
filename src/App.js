@@ -8,6 +8,7 @@ import { ItemList, ItemEdit, ItemCreate } from './items';
 import { OrderList, OrderEdit, OrderCreate } from './orders';
 import loopbackRestClient from 'aor-loopback';
 import authClient from './authClient';
+import {REACT_APP_API_HOST} from './Configration';
 import { AuthProvider } from 'aor-permissions';
 import Menu from './menu';
 
@@ -39,7 +40,7 @@ const resolveAccessToItems = ({ resource, permissions, exact, value }) => {
 class App extends Component {
   render() {
     return (
-        <Admin title="物品审批管理" locale="zh" messages={messages} menu={Menu} authClient={authClient} restClient={loopbackRestClient('/api')}>
+        <Admin title="物品审批管理" locale="zh" messages={messages} menu={Menu} authClient={authClient} restClient={loopbackRestClient(`${REACT_APP_API_HOST}/api`)}>
             <Resource name="orders" list={OrderList} edit={OrderEdit} create={OrderCreate} />
             <Resource name="accounts" resolve={resolveAccessToAccounts} createExact={true} list={AccountList} edit={AccountEdit} create={AccountCreate}/>
             <Resource name="items" resolve={resolveAccessToItems} createExact={true} list={ItemList} edit={ItemEdit} create={ItemCreate}/>
