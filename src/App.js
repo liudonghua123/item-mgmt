@@ -39,7 +39,7 @@ const resolveAccessToItems = ({ resource, permissions, exact, value }) => {
 class App extends Component {
   render() {
     return (
-        <Admin title="物品审批管理" locale="zh" messages={messages} menu={Menu} authClient={authClient} restClient={loopbackRestClient('http://localhost:4000/api')}>
+        <Admin title="物品审批管理" locale="zh" messages={messages} menu={Menu} authClient={authClient} restClient={loopbackRestClient('/api')}>
             <Resource name="orders" list={OrderList} edit={OrderEdit} create={OrderCreate} />
             <Resource name="accounts" resolve={resolveAccessToAccounts} createExact={true} list={AccountList} edit={AccountEdit} create={AccountCreate}/>
             <Resource name="items" resolve={resolveAccessToItems} createExact={true} list={ItemList} edit={ItemEdit} create={ItemCreate}/>
