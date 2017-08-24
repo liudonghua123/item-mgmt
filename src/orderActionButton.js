@@ -7,7 +7,7 @@ import { UPDATE } from 'admin-on-rest';
 import { showNotification as showNotificationAction } from 'admin-on-rest';
 import { push as pushAction } from 'react-router-redux';
 
-const restClient = loopbackRestClient('http://localhost:4000/api');
+const restClient = loopbackRestClient('/api');
 
 class ApproveComponent extends Component {
     handleClick = () => {
