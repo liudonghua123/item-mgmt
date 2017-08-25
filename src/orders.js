@@ -64,7 +64,7 @@ export const OrderList = (props) => (
             <TextField source="id" />
             <TextField source="creator" />
             <DateField source="createDateTime" locales="zh-CN" showTime />
-            <ReferenceField source="itemId" reference="items" linkType='show'>
+            <ReferenceField source="itemId" reference="items" linkType={localStorage.getItem('role')=='admin' ? 'show': false}>
                 <TextField source="name" />
             </ReferenceField>
             <NumberField source="count" />
