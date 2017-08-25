@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import loopbackRestClient from 'aor-loopback';
 import { UPDATE } from 'admin-on-rest';
 import { showNotification as showNotificationAction } from 'admin-on-rest';
@@ -16,17 +16,19 @@ class ApproveComponent extends Component {
         const updatedRecord = { ...record, approver: localStorage.getItem('username'), approveDateTime: new Date() };
         restClient(UPDATE, 'orders', { id: record.id, data: updatedRecord })
             .then(() => {
-                showNotification('Order approved');
-                push('/comments');
+                showNotification('订单已审批');
+                // push('/orders');
+                window.location.reload();
             })
             .catch((e) => {
                 console.error(e);
-                showNotification('Error: order not approved', 'warning')
+                showNotification('错误: 订单未审批', 'warning')
             });
     }
 
     render() {
-        return <FlatButton label="Approve" onClick={this.handleClick} />;
+        const { record } = this.props;
+        return <RaisedButton label="审批" onClick={this.handleClick} primary={true} disabled={record.approver != null} />;
     }
 }
 
@@ -48,17 +50,19 @@ class SendComponent extends Component {
         const updatedRecord = { ...record, sender: localStorage.getItem('username'), sendDateTime: new Date() };
         restClient(UPDATE, 'orders', { id: record.id, data: updatedRecord })
             .then(() => {
-                showNotification('Order sended');
-                push('/comments');
+                showNotification('订单已发放');
+                // push('/orders');
+                window.location.reload();
             })
             .catch((e) => {
                 console.error(e);
-                showNotification('Error: order not sended', 'warning')
+                showNotification('错误: 订单未发放', 'warning')
             });
     }
 
     render() {
-        return <FlatButton label="Send" onClick={this.handleClick} />;
+        const { record } = this.props;
+        return <RaisedButton label="发放" onClick={this.handleClick} secondary={true} disabled={ !(record.approver != null && record.sender == null)} />;
     }
 }
 

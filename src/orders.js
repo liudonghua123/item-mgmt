@@ -1,7 +1,7 @@
 import React from 'react';
-import { List, Datagrid, Edit, Create, SimpleForm } from 'admin-on-rest';
+import { List, Datagrid, Edit, Create, SimpleForm, Filter } from 'admin-on-rest';
 import { DateField, TextField, NumberField, ReferenceField } from 'admin-on-rest';
-import { EditButton, DisabledInput, TextInput, LongTextInput, DateInput, SelectInput, NumberInput, ReferenceInput } from 'admin-on-rest';
+import { EditButton, DisabledInput, TextInput, LongTextInput, DateInput, SelectInput, NumberInput, ReferenceInput, BooleanInput } from 'admin-on-rest';
 import authClient from './authClient';
 import { SwitchPermissions, Permission } from 'aor-permissions';
 import { ApproveButton, SendButton } from './orderActionButton';
@@ -12,7 +12,7 @@ const checkUserCanApprove = (params) => {
         return true;
     }
     return false;
-}
+};
 
 const checkUserCanSend = (params) => {
     const role = params.permissions;
@@ -20,7 +20,7 @@ const checkUserCanSend = (params) => {
         return true;
     }
     return false;
-}
+};
 
 export const OrderList = (props) => (
     <List {...props}>
@@ -33,10 +33,12 @@ export const OrderList = (props) => (
             </ReferenceField>
             <NumberField source="count" />
             <SwitchPermissions authClient={authClient} {...props}>
-                <Permission value="approver">
+                <Permission value={['approver', 'admin']}>
                     <ApproveButton />
                 </Permission>
-                <Permission value="sender">
+            </SwitchPermissions>
+            <SwitchPermissions authClient={authClient} {...props}>
+                <Permission value={['sender', 'admin']}>
                     <SendButton />
                 </Permission>
             </SwitchPermissions>
