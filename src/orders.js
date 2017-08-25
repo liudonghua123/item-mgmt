@@ -22,13 +22,49 @@ const checkUserCanSend = (params) => {
     return false;
 };
 
+const OrderFilter = (props) => {
+    const role = localStorage.getItem('role');
+    let content1 = null;
+    let content2 = null;
+    const choices = [
+        { id: false, name: '否' },
+        { id: true, name: '是' },
+    ];
+    if (role == 'admin' || role == 'approver') {
+        content1 = <SelectInput label='是否审批' source="isApproved" allowEmpty alwaysOn choices={choices} />
+    }
+    if (role == 'admin' || role == 'sender') {
+        content2 = <SelectInput label='是否发放' source="isSended" allowEmpty alwaysOn choices={choices} />
+    }
+    return <Filter {...props}>{content1}{content2}</Filter>
+};
+
+const OrderApproveFilter = (props) => (
+    <Filter {...props}>
+        <SelectInput source="isApproved" allowEmpty alwaysOn choices={[
+            { id: '未审批', name: false },
+            { id: '已审批', name: true },
+        ]} />
+    </Filter>
+);
+
+const OrderSendFilter = (props) => (
+    <Filter {...props}>
+        <SelectInput source="isSended" allowEmpty alwaysOn choices={[
+            { id: '未审批', name: false },
+            { id: '已审批', name: true },
+        ]} />
+    </Filter>
+);
+
+
 export const OrderList = (props) => (
-    <List {...props}>
+    <List {...props} filters={<OrderFilter />}>
         <Datagrid>
             <TextField source="id" />
             <TextField source="creator" />
             <DateField source="createDateTime" locales="zh-CN" showTime />
-            <ReferenceField source="itemId" reference="items" linkType={false}>
+            <ReferenceField source="itemId" reference="items" linkType='show'>
                 <TextField source="name" />
             </ReferenceField>
             <NumberField source="count" />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Datagrid, Edit, Create, SimpleForm } from 'admin-on-rest';
+import { List, Datagrid, Edit, Create, SimpleForm, Show, SimpleShowLayout } from 'admin-on-rest';
 import { DateField, TextField, NumberField } from 'admin-on-rest';
 import { EditButton, DisabledInput, TextInput, LongTextInput, DateInput, SelectInput, NumberInput } from 'admin-on-rest';
 
@@ -16,13 +16,21 @@ export const ItemList = (props) => (
     </List>
 );
 
-const ItemTitle = ({ record }) => {
-    return <span>Item {record ? `"${record.title}"` : ''}</span>;
-};
+export const ItemShow = (props) => (
+    <Show {...props}>
+        <SimpleShowLayout>
+            <TextField source="id" />
+            <TextField source="name" />
+            <TextField source="description" />
+            <TextField source="amount" />
+            <TextField source="balance" />
+        </SimpleShowLayout>
+    </Show>
+);
 
 export const ItemEdit = (props) => (
-    <Edit title={<ItemTitle />} {...props}>
-        <SimpleForm>
+    <Edit {...props}>
+        <SimpleForm redirect="show">
             <DisabledInput source="id" />
             <TextInput source="name" />
             <TextInput source="description" />
@@ -34,7 +42,7 @@ export const ItemEdit = (props) => (
 
 export const ItemCreate = (props) => (
     <Create title="Create a Item" {...props}>
-        <SimpleForm>
+        <SimpleForm redirect="list">
             <TextInput source="name" />
             <TextInput source="description" />
             <NumberInput source="amount" />

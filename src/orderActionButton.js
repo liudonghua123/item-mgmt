@@ -13,7 +13,7 @@ const restClient = loopbackRestClient(`${REACT_APP_API_HOST}/api`);
 class ApproveComponent extends Component {
     handleClick = () => {
         const { push, record, showNotification } = this.props;
-        const updatedRecord = { ...record, approver: localStorage.getItem('username'), approveDateTime: new Date() };
+        const updatedRecord = { ...record, isApproved: true, approver: localStorage.getItem('username'), approveDateTime: new Date() };
         restClient(UPDATE, 'orders', { id: record.id, data: updatedRecord })
             .then(() => {
                 showNotification('订单已审批');
@@ -28,7 +28,7 @@ class ApproveComponent extends Component {
 
     render() {
         const { record } = this.props;
-        return <RaisedButton label="审批" onClick={this.handleClick} primary={true} disabled={record.approver != null} />;
+        return <RaisedButton label="审批" onClick={this.handleClick} primary={true} disabled={record.isApproved} />;
     }
 }
 
@@ -47,7 +47,7 @@ export const ApproveButton = connect(null, {
 class SendComponent extends Component {
     handleClick = () => {
         const { push, record, showNotification } = this.props;
-        const updatedRecord = { ...record, sender: localStorage.getItem('username'), sendDateTime: new Date() };
+        const updatedRecord = { ...record, isSended: true, sender: localStorage.getItem('username'), sendDateTime: new Date() };
         restClient(UPDATE, 'orders', { id: record.id, data: updatedRecord })
             .then(() => {
                 showNotification('订单已发放');
@@ -62,7 +62,7 @@ class SendComponent extends Component {
 
     render() {
         const { record } = this.props;
-        return <RaisedButton label="发放" onClick={this.handleClick} secondary={true} disabled={ !(record.approver != null && record.sender == null)} />;
+        return <RaisedButton label="发放" onClick={this.handleClick} secondary={true} disabled={!(record.isApproved && !record.isSended)} />;
     }
 }
 

@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import { simpleRestClient, Admin, Resource } from 'admin-on-rest';
 import { AccountList, AccountEdit, AccountCreate } from './accounts';
-import { ItemList, ItemEdit, ItemCreate } from './items';
+import { ItemList, ItemEdit, ItemCreate, ItemShow } from './items';
 import { OrderList, OrderEdit, OrderCreate } from './orders';
 import loopbackRestClient from 'aor-loopback';
 import authClient from './authClient';
@@ -43,7 +43,7 @@ class App extends Component {
         <Admin title="物品审批管理" locale="zh" messages={messages} menu={Menu} authClient={authClient} restClient={loopbackRestClient(`${REACT_APP_API_HOST}/api`)}>
             <Resource name="orders" list={OrderList} edit={OrderEdit} create={OrderCreate} />
             <Resource name="accounts" resolve={resolveAccessToAccounts} createExact={true} list={AccountList} edit={AccountEdit} create={AccountCreate}/>
-            <Resource name="items" resolve={resolveAccessToItems} createExact={true} list={ItemList} edit={ItemEdit} create={ItemCreate}/>
+            <Resource name="items" resolve={resolveAccessToItems} createExact={true} list={ItemList} edit={ItemEdit} create={ItemCreate} show={ItemShow}/>
         </Admin>
     );
   }
