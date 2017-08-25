@@ -1,18 +1,30 @@
 import React from 'react';
-import { List, Datagrid, Edit, Create, SimpleForm, Show, SimpleShowLayout } from 'admin-on-rest';
+import { List, Datagrid, Edit, Create, SimpleForm, Show, SimpleShowLayout, Responsive, SimpleList } from 'admin-on-rest';
 import { DateField, TextField, NumberField } from 'admin-on-rest';
 import { EditButton, DisabledInput, TextInput, LongTextInput, DateInput, SelectInput, NumberInput } from 'admin-on-rest';
 
 export const ItemList = (props) => (
     <List {...props}>
-        <Datagrid>
-            <TextField source="id" />
-            <TextField source="name" />
-            <TextField source="description" />
-            <NumberField source="amount" />
-            <NumberField source="balance" />
-            <EditButton basePath="/items" />
-        </Datagrid>
+        <Responsive
+            small={
+                <Datagrid>
+                    <TextField source="name" />
+                    <NumberField source="amount" />
+                    <NumberField source="balance" />
+                    <EditButton basePath="/items" />
+                </Datagrid>
+            }
+            medium={
+                <Datagrid>
+                    <TextField source="id" />
+                    <TextField source="name" />
+                    <TextField source="description" />
+                    <NumberField source="amount" />
+                    <NumberField source="balance" />
+                    <EditButton basePath="/items" />
+                </Datagrid>
+            }
+        />
     </List>
 );
 

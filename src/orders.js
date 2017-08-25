@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Datagrid, Edit, Create, SimpleForm, Filter } from 'admin-on-rest';
+import { List, Datagrid, Edit, Create, SimpleForm, Filter, Responsive, SimpleList } from 'admin-on-rest';
 import { DateField, TextField, NumberField, ReferenceField } from 'admin-on-rest';
 import { EditButton, DisabledInput, TextInput, LongTextInput, DateInput, SelectInput, NumberInput, ReferenceInput, BooleanInput } from 'admin-on-rest';
 import authClient from './authClient';
@@ -60,25 +60,48 @@ const OrderSendFilter = (props) => (
 
 export const OrderList = (props) => (
     <List {...props} filters={<OrderFilter />}>
-        <Datagrid>
-            <TextField source="id" />
-            <TextField source="creator" />
-            <DateField source="createDateTime" locales="zh-CN" showTime />
-            <ReferenceField source="itemId" reference="items" linkType={localStorage.getItem('role')=='admin' ? 'show': false}>
-                <TextField source="name" />
-            </ReferenceField>
-            <NumberField source="count" />
-            <SwitchPermissions authClient={authClient} {...props}>
-                <Permission value={['approver', 'admin']}>
-                    <ApproveButton />
-                </Permission>
-            </SwitchPermissions>
-            <SwitchPermissions authClient={authClient} {...props}>
-                <Permission value={['sender', 'admin']}>
-                    <SendButton />
-                </Permission>
-            </SwitchPermissions>
-        </Datagrid>
+        <Responsive
+            small={
+                <Datagrid>
+                    <TextField source="creator" />
+                    <ReferenceField source="itemId" reference="items" linkType={localStorage.getItem('role')=='admin' ? 'show': false}>
+                        <TextField source="name" />
+                    </ReferenceField>
+                    <NumberField source="count" />
+                    <SwitchPermissions authClient={authClient} {...props}>
+                        <Permission value={['approver', 'admin']}>
+                            <ApproveButton />
+                        </Permission>
+                    </SwitchPermissions>
+                    <SwitchPermissions authClient={authClient} {...props}>
+                        <Permission value={['sender', 'admin']}>
+                            <SendButton />
+                        </Permission>
+                    </SwitchPermissions>
+                </Datagrid>
+            }
+            medium={
+                <Datagrid>
+                    <TextField source="id" />
+                    <TextField source="creator" />
+                    <DateField source="createDateTime" locales="zh-CN" showTime />
+                    <ReferenceField source="itemId" reference="items" linkType={localStorage.getItem('role')=='admin' ? 'show': false}>
+                        <TextField source="name" />
+                    </ReferenceField>
+                    <NumberField source="count" />
+                    <SwitchPermissions authClient={authClient} {...props}>
+                        <Permission value={['approver', 'admin']}>
+                            <ApproveButton />
+                        </Permission>
+                    </SwitchPermissions>
+                    <SwitchPermissions authClient={authClient} {...props}>
+                        <Permission value={['sender', 'admin']}>
+                            <SendButton />
+                        </Permission>
+                    </SwitchPermissions>
+                </Datagrid>
+            }
+        />
     </List>
 );
 
